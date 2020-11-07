@@ -10,10 +10,10 @@ The application technical overview:
 
 
 
-![home]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/home.jpg)
+![home](https://livenlearnaday.github.io/assets/BMZScanner/home.jpg)
 
-![zxing & dm7]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/zxing.jpg)
+![zxing & dm7](https://livenlearnaday.github.io/assets/BMZScanner/zxing.jpg)
 
-![ocr]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/ocr.jpg)
+![ocr](https://livenlearnaday.github.io/assets/BMZScanner/ocr.jpg)
 
-![boofcv]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/boofcv.jpg)
+![boofcv](https://livenlearnaday.github.io/assets/BMZScanner/boofcv.jpg)
