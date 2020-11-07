@@ -9,4 +9,17 @@ The application technical overview:
 -no tests (yet)
 
 
+![20201108_042238.jpg]({{site.baseurl}}/20201108_042238.jpg)
+
+
+![20201108_042254.jpg]({{site.baseurl}}/20201108_042254.jpg)
+
+
+![20201108_042318.jpg]({{site.baseurl}}/20201108_042318.jpg)
+
+
+![20201108_042344.jpg]({{site.baseurl}}/20201108_042344.jpg)
+
+
+
 
