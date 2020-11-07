@@ -8,18 +8,11 @@ The application technical overview:
 -Utilizes Room and DAO for local data storage and access
 -no tests (yet)
 
+![home]({{site.baseurl}}/http://livenlearnaday.github.io/assets/BMZScanner/home.jpg")
 
-![20201108_042238.jpg]({{site.baseurl}}/20201108_042238.jpg)
+![zxing & dm7]({{site.baseurl}}/http://livenlearnaday.github.io/assets/BMZScanner/zxing.jpg")
 
+![boofcv]({{site.baseurl}}/http://livenlearnaday.github.io/assets/BMZScanner/boofcv.jpg")
 
-![20201108_042254.jpg]({{site.baseurl}}/20201108_042254.jpg)
-
-
-![20201108_042318.jpg]({{site.baseurl}}/20201108_042318.jpg)
-
-
-![20201108_042344.jpg]({{site.baseurl}}/20201108_042344.jpg)
-
-
-
+![ocr]({{site.baseurl}}/http://livenlearnaday.github.io/assets/BMZScanner/ocr.jpg")
 
