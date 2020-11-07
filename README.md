@@ -4,15 +4,16 @@ A simple scanning application that utilizes various scanning libraries (bulk qr 
 
 
 The application technical overview:
--MVVM architecture for scanning implementation
--Utilizes Room and DAO for local data storage and access
--no tests (yet)
+- MVVM architecture for scanning implementation
+- Utilizes Room and DAO for local data storage and access
+- no tests (yet)
 
-![home]("http://livenlearnaday.github.io/assets/BMZScanner/home.jpg")
 
-![zxing & dm7]("http://livenlearnaday.github.io/assets/BMZScanner/zxing.jpg")
 
-![boofcv]("http://livenlearnaday.github.io/assets/BMZScanner/boofcv.jpg")
+![home]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/home.jpg)
 
-![ocr]("http://livenlearnaday.github.io/assets/BMZScanner/ocr.jpg")
+![zxing & dm7]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/zxing.jpg)
 
+![ocr]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/ocr.jpg)
+
+![boofcv]({{site.baseurl}}/https://livenlearnaday.github.io/assets/BMZScanner/boofcv.jpg)
