@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right">
+
+
+
+    <Button
+        android:id="@+id/bulkqr_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:scaleType="fitXY"
+        android:background="@drawable/bulkqr"
+        />
+
+
+    <Button
+        android:id="@+id/barcode_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:layout_gravity="top|end"
+        android:scaleType="fitXY"
+        android:background="@drawable/barcode"
+
+        />
+
+
+    <Button
+        android:id="@+id/ocr_button"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:textStyle="bold"
+        android:text="T"
+
+        />
+
+
+
+    <Button
+        android:id="@+id/flash_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="@dimen/dimen_10"
+        android:scaleType="fitXY"
+        android:background="@drawable/ic_baseline_flash_off_24"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

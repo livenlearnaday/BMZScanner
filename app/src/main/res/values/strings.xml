@@ -1,0 +1,244 @@
+<resources>
+    <string name="app_name">BMZ Scanner</string>
+
+    <string name="home_fragment_title">Scanning</string>
+
+
+    <string name="app_version">1.5</string>
+
+    <string name="scan_qr">Scan QR Code</string>
+
+    <string name="low_storage_error">Cannot download text scanning data due to low device storage
+</string>
+    <string name="no_camera_permission">No Camera Permission</string>
+
+
+        <string name="ocr_preview_instruction">Tap to capture. Pinch/Stretch to zoom</string>
+
+
+    <string name="permission_camera_rationale">Need access to camera for the scanning to work.</string>
+    <string name="no">no</string>
+    <string name="ok">ok</string>
+
+    <string name="acra_toast">Reporting Crash. This will get fixed!</string>
+
+    <string-array name="binary_filters">
+        <item>None</item>
+        <item>Dilate-4</item>
+        <item>Dilate-8</item>
+        <item>Erode-4</item>
+        <item>Erode-8</item>
+        <item>Edge-4</item>
+        <item>Edge-8</item>
+        <item>Denoise</item>
+        <item>Thin</item>
+    </string-array>
+
+    <string-array name="equi_models">
+        <item>Pinhole</item>
+        <item>Fisheye</item>
+        <item>Cylinder</item>
+    </string-array>
+
+    <string-array name="blurs">
+        <item>Mean</item>
+        <item>Gaussian</item>
+        <item>Median</item>
+    </string-array>
+
+    <string-array name="trackers_stabilize">
+        <item>KLT</item>
+        <item>SURF</item>
+    </string-array>
+
+    <string-array name="thresholding">
+        <item>Global: Otsu</item>
+        <item>Global: Entropy</item>
+        <item>Local: Mean</item>
+        <item>Local: Gaussian</item>
+        <item>Local: Sauvola</item>
+        <item>Local: NICK</item>
+        <item>Block: Mean</item>
+        <item>Block: Min-Max</item>
+        <item>Block: Otsu</item>
+    </string-array>
+
+    <string-array name="background_models">
+        <item>Basic: Grey</item>
+        <item>Basic: Color</item>
+        <item>Gaussian: Grey</item>
+        <item>Gaussian: Color</item>
+        <item>GMM: Grey</item>
+        <item>GMM: Color</item>
+    </string-array>
+
+    <string-array name="fiducials">
+        <item>Square Binary</item>
+        <item>Square Image</item>
+        <item>Chessboard</item>
+        <item>Square Grid</item>
+    </string-array>
+
+    <string-array name="shapes">
+        <item>Ellipse</item>
+        <item>Polygon</item>
+    </string-array>
+
+    <string-array name="tracking_objects">
+        <item>Circulant</item>
+        <item>Mean-Shift</item>
+        <item>Mean-Shift Scale</item>
+        <item>Mean-Shift Likelihood</item>
+        <item>Sparse Flow</item>
+        <item>TLD</item>
+    </string-array>
+
+    <string-array name="transforms">
+        <item>DFT</item>
+        <item>Pyramid</item>
+        <item>Wavelet</item>
+    </string-array>
+
+    <string-array name="enhance">
+        <item>Histogram Global</item>
+        <item>Histogram Local</item>
+        <item>Sharpen-4</item>
+        <item>Sharpen-8</item>
+    </string-array>
+
+    <string-array name="gradients">
+        <item>Three</item>
+        <item>Sobel</item>
+        <item>Prewitt</item>
+        <item>two-0</item>
+        <item>two-1</item>
+    </string-array>
+
+    <string-array name="image_classifiers">
+        <item>VGG</item>
+        <item>NIN</item>
+    </string-array>
+
+    <string-array name="code_sort">
+        <item>UNSORTED</item>
+        <item>ASC</item>
+        <item>DESC</item>
+    </string-array>
+
+    <string-array name="point_features">
+        <item>Shi-Tomasi</item>
+        <item>Harris</item>
+        <item>FAST</item>
+        <item>Laplacian</item>
+        <item>KitRos</item>
+        <item>Hessian Det</item>
+        <item>Hessian Trace</item>
+    </string-array>
+
+    <string-array name="scale_features">
+        <item>SURF</item>
+        <item>SIFT</item>
+    </string-array>
+
+    <string-array name="line_features">
+        <item>Hough Polar</item>
+        <item>Hough Foot</item>
+        <item>Segments</item>
+    </string-array>
+
+    <string-array name="threshold_styles">
+        <item>global</item>
+        <item>local</item>
+    </string-array>
+
+    <string-array name="detectors">
+        <item>Fast-Hessian</item>
+        <item>SIFT</item>
+        <item>Shi-Tomasi</item>
+        <item>Harris</item>
+        <item>FAST</item>
+    </string-array>
+
+    <string-array name="descriptors">
+        <item>SURF</item>
+        <item>SIFT</item>
+        <item>BRIEF</item>
+        <item>NCC</item>
+    </string-array>
+
+    <string-array name="disparity_views">
+        <item>Association</item>
+        <item>Rectification</item>
+        <item>Disparity</item>
+        <item>Cloud 3D</item>
+    </string-array>
+
+    <string-array name="disparity_algs">
+        <item>BlockMatch</item>
+        <item>BlockMatch5</item>
+        <item>SGM</item>
+    </string-array>
+
+    <string-array name="disparity_bm_errors">
+        <item>SAD</item>
+        <item>Census</item>
+        <item>NCC</item>
+    </string-array>
+
+    <string-array name="disparity_sgm_errors">
+        <item>SAD</item>
+        <item>Census</item>
+        <item>HMI</item>
+    </string-array>
+
+    <string-array name="segmentation_algs">
+        <item>Watershed</item>
+        <item>Felzenszwalb-Huttenloche</item>
+        <item>SLIC</item>
+        <item>Mean-Shift</item>
+    </string-array>
+
+    <string name="title_activity_image_recognition">ImageRecognition</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+
+
+    //ZXing
+    <string name="scanner_activity">ZXing Scanner - Full Activity</string>
+    <string name="scanner_fragment_activity">ZXing Scanner - Full Fragment Activity</string>
+    <string name="simple_scanner_activity">ZXing Scanner - Simple Activity</string>
+    <string name="custom_view_finder_scanner_activity">ZXing Scanner - Custom View Finder Activity</string>
+    <string name="scaling_scanner_activity">ZXing Scanner - Scaling Activity</string>
+    <string name="simple_scanner_fragment_activity">ZXing Scanner - Simple Fragment Activity</string>
+    <string name="full_screen_scanner_fragment_activity">ZXing Scanner - Full Screen Fragment Activity</string>
+    <string name="simple_activity_sample">Simple Activity Sample</string>
+    <string name="simple_fragment_sample">Simple Fragment Sample</string>
+    <string name="activity_sample">Full Activity Sample</string>
+    <string name="fragment_sample">Full Fragment Sample</string>
+    <string name="full_screen_sample">Full Screen Fragment Sample</string>
+    <string name="custom_view_finder_sample">Custom View Finder Sample</string>
+    <string name="scaling_sample">Scaling Sample</string>
+    <string name="toggle_flash">Flash</string>
+    <string name="flash_on">Flash [ON]</string>
+    <string name="flash_off">Flash [OFF]</string>
+    <string name="auto_focus_on">Auto Focus [ON]</string>
+    <string name="auto_focus_off">Auto Focus [OFF]</string>
+    <string name="formats">Formats</string>
+    <string name="choose_formats">Choose Formats</string>
+    <string name="select_camera">Select a Camera</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
+    <bool name="cameraPreviewShouldFillView">true</bool>
+
+
+    <string name="barcode_scan_title">ZXing Barcode Scan</string>
+    <string name="ocr_scan_title">Mobile Vision Text Scan</string>
+    <string name="bulkqr_scan_title">Boofcv Qr Scan</string>
+
+
+
+
+
+</resources>

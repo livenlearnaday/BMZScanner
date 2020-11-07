@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    tools:viewBindingIgnore="true"
+    android:id="@+id/root_layout"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/black_overlay"
+        android:text="@string/bulkqr_scan_title"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        />
+
+    <include layout="@layout/layout_scanning_options" />
+
+    <FrameLayout
+    android:id="@+id/camera_frame_layout"
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:background="#000000"
+   >
+
+</FrameLayout>
+
+    <include layout="@layout/layout_code_detected_quantity_and_recycler_view"/>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingVertical="@dimen/dimen_5"-->
+<!--        android:layout_gravity="left"-->
+<!--        android:orientation="horizontal">-->
+
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="@dimen/dimen_20"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="Detected:"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="@dimen/text_size_18" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/total_unique"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="@dimen/text_size_18"-->
+<!--            android:layout_marginRight="@dimen/dimen_20"-->
+<!--            />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/go_to_qrlist_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="List"-->
+<!--            android:layout_gravity="center"-->
+<!--            />-->
+
+<!--    </LinearLayout>-->
+
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recycle_view_scanning"-->
+<!--        android:layout_marginLeft="@dimen/dimen_5"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        />-->
+
+
+</LinearLayout>

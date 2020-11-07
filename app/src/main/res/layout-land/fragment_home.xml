@@ -1,0 +1,61 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/White"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/home_fragment">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/linearLayout">
+
+
+            <LinearLayout
+                android:id="@+id/login_with_qr"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/dimen_5">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/Black"
+                    android:textSize="@dimen/text_size_20"
+                    android:text="@string/scan_qr"
+                    android:padding="@dimen/dimen_5"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageView
+                    android:id="@+id/qr_login_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/icon_scan_button"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:padding="@dimen/dimen_5"/>
+
+
+
+                </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/home_fragment"
+    android:id="@+id/nav_graph">
+
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="io.github.livenlearnaday.bmzscanner.ui.HomeFragment"
+        android:label="@string/home_fragment_title"
+        tools:layout="@layout/fragment_home">
+
+
+        <action
+            android:id="@+id/navigate_from_home_fragment_to_codeDetectActivity"
+            app:destination="@id/ZXingScannerActivity" />
+
+
+    </fragment>
+
+
+    <activity
+        android:id="@+id/qrCodeDetectActivity"
+        android:name="io.github.livenlearnaday.bmzscanner.scanning.bulkqr.QrCodeDetectActivity"
+        android:label="QrCodeDetectActivity" >
+        <argument
+            android:name="isQrLogin"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </activity>
+
+    <activity
+        android:id="@+id/ZXingScannerActivity"
+        android:name="io.github.livenlearnaday.bmzscanner.scanning.zxing.ZXingScannerActivity"
+        android:label="ZXingScannerActivity" >
+        <argument
+            android:name="isQrLogin"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </activity>
+
+
+
+
+
+
+
+</navigation>

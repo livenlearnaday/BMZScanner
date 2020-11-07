@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:viewBindingIgnore="true"
+    android:orientation="vertical"
+    android:keepScreenOn="true">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/black_overlay"
+        android:text="@string/ocr_scan_title"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"
+        />
+
+
+  <include layout="@layout/layout_scanning_options"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/black_overlay"
+        android:text="@string/ocr_preview_instruction"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_18"
+        />
+
+
+
+
+    <io.github.livenlearnaday.bmzscanner.scanning.ocr.CameraSourcePreview
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4">
+
+        <io.github.livenlearnaday.bmzscanner.scanning.ocr.GraphicOverlay
+            android:id="@+id/graphicOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </io.github.livenlearnaday.bmzscanner.scanning.ocr.CameraSourcePreview>
+
+
+
+    <include layout="@layout/layout_code_detected_quantity_and_recycler_view"/>
+
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:layout_below="@+id/detection_info"-->
+<!--        android:id="@+id/recycle_view_scanning"-->
+<!--        android:layout_marginLeft="@dimen/dimen_5"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        />-->
+
+
+        </LinearLayout>
