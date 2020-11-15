@@ -4,27 +4,10 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="left_menu">#ff006144</color>
     <color name="list_separator">#ccc</color>
     <color name="app_tint">#ff006144</color>
     <color name="app_tint_dark">#455A64</color>
-
-    <!-- Left Menu Colors -->
-    <color name="left_menu_button_color_state_selected">#ccff010f</color>
-    <color name="left_menu_button_color_state_pressed">#55000000</color>
-    <color name="left_menu_button_color_state_normal">#ff006144</color>
-
-    <color name="grey_normal">#cfd8dc</color>
-    <color name="grey_pressed">#b0bec5</color>
-
-    <color name="blue_grey_normal">#607D8B</color>
-    <color name="blue_grey_pressed">#4d636e</color>
-
-    <color name="green_normal">#C8E6C9</color>
-    <color name="green_pressed">#A5D6A7</color>
-
-    <color name="green_light">#E0F2F1</color>
-
+    
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>
@@ -166,49 +149,10 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
 
-
-    <color name="group_survey_bar">#CFD8DC</color>
-    <color name="group_survey_bar_text">#37474F</color>
-
-    <color name="group_bar">#f5d8d8</color>
-    <color name="group_bar_text">#c14a4a</color>
-    <color name="group_br_text">#f7fafc</color>
-
-    <color name="green_bkground">#64B62C</color>
-
-    <color name="sell_total_bar">#fff2df</color>
-
-    <color name="flat_button_press">#00796B</color>
-    <color name="flat_button">#009688</color>
-
     <color name="edittext_background">#ffffff</color>
 
     <color name="text_color">#333333</color>
     <color name="register_bg">#fdfbf7</color>
-
-    <color name="notification_background">#FBE9E7</color>
-
-    <color name="menu_plan">#B2DFDB</color>
-    <color name="menu_plan_pressed">#80CBC4</color>
-
-    <color name="menu_shop">#FFE0B2</color>
-    <color name="menu_shop_pressed">#FFCC80</color>
-
-    <color name="supplier">#CFD8DC</color>
-    <color name="supplier_pressed">#b0bec5</color>
-
-    <color name="shop_bar_normal">#f1f4f6</color>
-    <color name="shop_bar_pressed">#b0bec5</color>
-    <color name="shop_bar_selected">#b0bec5</color>
-
-    <color name="info_support_normal">#1d5cd2</color>
-    <color name="info_support_pressed">#0a3b97</color>
-
-    <color name="approve_normal">#4DB6AC</color>
-    <color name="approve_pressed">#009688</color>
-    <color name="not_approve_normal">#EF9A9A</color>
-    <color name="not_approve_pressed">#E57373</color>
-
 
     <color name="black_overlay">#66000000</color>
 
