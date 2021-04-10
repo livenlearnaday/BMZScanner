@@ -1,18 +1,13 @@
 package io.github.livenlearnaday.bmzscanner.scanning;
 
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +28,6 @@ import io.github.livenlearnaday.bmzscanner.scanning.adapter.CodeAdapter;
 import io.github.livenlearnaday.bmzscanner.scanning.bulkqr.QrCodeDetectActivity;
 import io.github.livenlearnaday.bmzscanner.scanning.ocr.OcrCaptureActivity;
 import io.github.livenlearnaday.bmzscanner.scanning.zxing.ZXingScannerActivity;
-import timber.log.Timber;
 
 import static io.github.livenlearnaday.bmzscanner.scanning.zxing.ZXingScannerActivity.uniqueCodeString;
 

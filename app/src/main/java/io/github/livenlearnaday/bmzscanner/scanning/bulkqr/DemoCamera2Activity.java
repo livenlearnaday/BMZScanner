@@ -10,15 +10,12 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.os.Bundle;
 import android.os.Looper;
-
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
-
 
 import org.acra.ACRA;
 
@@ -32,6 +29,7 @@ import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.image.ImageBase;
 import georegression.struct.point.Point2D_F64;
 import io.github.livenlearnaday.bmzscanner.MainApplication;
+import timber.log.Timber;
 
 /**
  * Camera activity specifically designed for this demonstration. Image processing algorithms
@@ -84,10 +82,10 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
     protected final static double TRIGGER_SLOW = 400.0;
 
     // Work variables for rendering performance
-    private Paint paintText = new Paint();
-    private Rect bounds0 = new Rect();
-    private Rect bounds1 = new Rect();
-    private Rect bounds2 = new Rect();
+    private final Paint paintText = new Paint();
+    private final Rect bounds0 = new Rect();
+    private final Rect bounds1 = new Rect();
+    private final Rect bounds2 = new Rect();
     private final Matrix tempMatrix = new Matrix();
 
     protected MainApplication app;
@@ -168,8 +166,8 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
 
     @Override
     protected void onCameraResolutionChange( int width , int height, int cameraOrientation ) {
-        Log.i("Demo","onCameraResolutionChange called. "+width+"x"+height);
-        super.onCameraResolutionChange(width,height,cameraOrientation);
+        Timber.i("onCameraResolutionChange called. " + width + "x" + height);
+        super.onCameraResolutionChange(width, height, cameraOrientation);
 
         ACRA.getErrorReporter().putCustomData("Resolution", width+" x "+height);
 
@@ -197,7 +195,7 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
                 });
             }
         } else {
-            Log.i("Demo","  processor is null");
+            Timber.i("  processor is null");
         }
         // Wait until initialize has been called to prevent it from being called twice immediately
         // and to prevent process or visualize from being initialize has been called
@@ -298,7 +296,7 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
             }
 
             if( verbose )
-                Log.i("Demo","Changing resolution because of slow process. pixels="+targetResolution);
+                Timber.i("Changing resolution because of slow process. pixels=" + targetResolution);
             runOnUiThread(()->{
                 Toast.makeText(DemoCamera2Activity.this,"Reducing resolution for performance", Toast.LENGTH_SHORT).show();
                 closeCamera();
@@ -307,7 +305,7 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
         } else {
             changeResolutionOnSlow = false;
             triggerSlow = false;
-            Log.i("Demo","Slow but at minimum resolution already");
+            Timber.i("Slow but at minimum resolution already");
         }
     }
 
@@ -352,7 +350,7 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
             // This must also be called before leaving the lock to prevent process or visualize
             // from being called on it before initialize has completed
             if( cameraInitialized ) {
-                Log.i("Demo", "initializing processor " + cameraWidth + "x" + cameraHeight);
+                Timber.i("initializing processor " + cameraWidth + "x" + cameraHeight);
                 processor.initialize(cameraWidth, cameraHeight, cameraOrientation);
             }
         }
@@ -537,23 +535,23 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
         }
     }
 
-    final float pts[] = new float[2];
+    final float[] pts = new float[2];
 
     /**
      * Applies the matrix to the specified point. Make sure only ONE thread uses this at any
      * moment.
      */
-    public void applyToPoint(Matrix matrix , double x , double y , Point2D_F64 out ) {
-        pts[0] = (float)x;
-        pts[1] = (float)y;
+    public void applyToPoint(Matrix matrix, double x, double y, Point2D_F64 out) {
+        pts[0] = (float) x;
+        pts[1] = (float) y;
         matrix.mapPoints(pts);
         out.x = pts[0];
         out.y = pts[1];
     }
 
-    public static void applyToPoint(Matrix matrix , double x , double y , Point2D_F64 out, float pts[] ) {
-        pts[0] = (float)x;
-        pts[1] = (float)y;
+    public static void applyToPoint(Matrix matrix, double x, double y, Point2D_F64 out, float[] pts) {
+        pts[0] = (float) x;
+        pts[1] = (float) y;
         matrix.mapPoints(pts);
         out.x = pts[0];
         out.y = pts[1];
@@ -561,8 +559,8 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
 
     public CameraPinholeBrown lookupIntrinsics() {
         // look up the camera parameters. If it hasn't been calibrated used what camera2 says
-        CameraPinholeBrown intrinsic = app.preference.lookup(cameraWidth,cameraHeight);
-        if( intrinsic == null ) {
+        CameraPinholeBrown intrinsic = app.preference.lookup(cameraWidth, cameraHeight);
+        if (intrinsic == null) {
             intrinsic = new CameraPinholeBrown();
             // Not sure why this happens but gracefully exit if it does
             if( !cameraIntrinsicNominal(intrinsic) ) {
@@ -587,7 +585,7 @@ public abstract class DemoCamera2Activity extends VisualizeCamera2Activity {
      * resolution should choose a relative one.
      */
     public enum Resolution {
-        LOW,MEDIUM,HIGH,MAX,R320x240,R640x480;
+        LOW, MEDIUM, HIGH, MAX, R320x240, R640x480
     }
 
 

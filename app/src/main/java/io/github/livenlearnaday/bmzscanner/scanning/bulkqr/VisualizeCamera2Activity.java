@@ -26,22 +26,17 @@ import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.media.Image;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.util.Size;
-import android.view.*;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.TextureView;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import boofcv.alg.color.ColorFormat;
-import boofcv.android.ConvertBitmap;
-import boofcv.android.ConvertCameraImage;
-
-import boofcv.concurrency.BWorkArrays;
-import boofcv.misc.MovingAverage;
-import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageType;
 import org.ddogleg.struct.GrowQueue_I8;
 
 import java.util.Stack;
@@ -49,6 +44,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
+
+import boofcv.alg.color.ColorFormat;
+import boofcv.android.ConvertBitmap;
+import boofcv.android.ConvertCameraImage;
+import boofcv.concurrency.BWorkArrays;
+import boofcv.misc.MovingAverage;
+import boofcv.struct.image.ImageBase;
+import boofcv.struct.image.ImageType;
+import timber.log.Timber;
 
 /**
  * Extension of {@link SimpleCamera2Activity} which adds visualization and hooks for image
@@ -152,7 +156,7 @@ public abstract class VisualizeCamera2Activity extends SimpleCamera2Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if( verbose )
-            Log.i(TAG,"onCreate()");
+            Timber.i("onCreate()");
 
         // Free up more screen space
         android.app.ActionBar actionBar = getActionBar();
@@ -169,7 +173,7 @@ public abstract class VisualizeCamera2Activity extends SimpleCamera2Activity {
         if( threads <= 0 )
             throw new IllegalArgumentException("Number of threads must be greater than 0");
         if( verbose )
-            Log.i(TAG,"setThreadPoolSize("+threads+")");
+            Timber.i("setThreadPoolSize(" + threads + ")");
 
         threadPool.setCorePoolSize(threads);
         threadPool.setMaximumPoolSize(threads);
@@ -182,7 +186,7 @@ public abstract class VisualizeCamera2Activity extends SimpleCamera2Activity {
      */
     protected void startCamera(@NonNull ViewGroup layout, @Nullable TextureView view ) {
         if( verbose )
-            Log.i(TAG,"startCamera(layout , view="+(view!=null)+")");
+            Timber.i("startCamera(layout , view=" + (view != null) + ")");
         displayView = new DisplayView(this);
         layout.addView(displayView,layout.getChildCount(),
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -262,7 +266,7 @@ public abstract class VisualizeCamera2Activity extends SimpleCamera2Activity {
         }
         int rotation = getWindowManager().getDefaultDisplay().getRotation();
         if( verbose )
-            Log.i(TAG,"camera rotation = "+sensorOrientation+" display rotation = "+rotation);
+            Timber.i("camera rotation = " + sensorOrientation + " display rotation = " + rotation);
 
         videoToDisplayMatrix(cameraWidth, cameraHeight,sensorOrientation,
                 viewWidth,viewHeight,rotation*90, stretchToFill,imageToView);
@@ -363,7 +367,7 @@ public abstract class VisualizeCamera2Activity extends SimpleCamera2Activity {
         long before = System.nanoTime();
         ConvertCameraImage.imageToBoof(image, boofImage.colorFormat, converted, boofImage.convertWork);
         long after = System.nanoTime();
-//			Log.i(TAG,"processFrame() image="+image.getWidth()+"x"+image.getHeight()+
+//			Timber.i("processFrame() image="+image.getWidth()+"x"+image.getHeight()+
 //					"  boof="+converted.width+"x"+converted.height);
 
         // record how long it took to convert the image for diagnostic reasons

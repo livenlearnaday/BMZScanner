@@ -1,6 +1,7 @@
 package io.github.livenlearnaday.bmzscanner.scanning.zxing;
 
 import android.hardware.Camera;
+
 import androidx.annotation.NonNull;
 
 

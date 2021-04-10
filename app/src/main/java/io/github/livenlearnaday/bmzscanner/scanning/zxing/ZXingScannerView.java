@@ -8,8 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
 
-import androidx.camera.core.impl.CameraCaptureMetaData;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;

@@ -1,13 +1,11 @@
 package io.github.livenlearnaday.bmzscanner.scanning.zxing;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.media.SoundPool;
 import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,22 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.google.zxing.Result;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,14 +61,14 @@ public class ZXingScannerActivity extends AppCompatActivity implements ZXingScan
 
     private CodeAdapter adapter1;
     private boolean mFlash = false;
-    private boolean mFocus = true;
+    private final boolean mFocus = true;
 
     private List<CodeDetail> mCodeDetailList;
 
     private ViewGroup contentFrame;
 
-    private int uniqueCount = 0;
-    private int oldValue = -1;
+    private final int uniqueCount = 0;
+    private final int oldValue = -1;
 
 
     @BindView(R.id.recycle_view_scanning)
@@ -114,7 +108,7 @@ public class ZXingScannerActivity extends AppCompatActivity implements ZXingScan
         scannerViewModel = ViewModelProviders.of(this).get(ScannerViewModel.class);
 
 
-        contentFrame = (ViewGroup) findViewById(R.id.content_frame);
+        contentFrame = findViewById(R.id.content_frame);
 
 
         if (checkPermission()) {
@@ -248,12 +242,8 @@ public class ZXingScannerActivity extends AppCompatActivity implements ZXingScan
 
 
     private boolean checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-            return false;
-        }
-        return true;
+        // Permission is not granted
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
@@ -265,7 +255,7 @@ public class ZXingScannerActivity extends AppCompatActivity implements ZXingScan
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

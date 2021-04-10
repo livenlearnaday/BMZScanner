@@ -19,25 +19,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
-import android.widget.TextView;
-
-import androidx.appcompat.widget.AppCompatEditText;
-
 
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import butterknife.BindView;
-import io.github.livenlearnaday.bmzscanner.data.entity.CodeDetail;
-import timber.log.Timber;
 
 import static io.github.livenlearnaday.bmzscanner.scanning.zxing.ZXingScannerActivity.uniqueCodeString;
 
@@ -55,7 +41,7 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
     private static Paint sRectPaint;
     private static Paint sTextPaint;
     private final TextBlock mText;
-    private String properCode = "";
+    private final String properCode = "";
 
 
     OcrGraphic(GraphicOverlay overlay, TextBlock text) {
@@ -70,20 +56,20 @@ public class OcrGraphic extends GraphicOverlay.Graphic {
                                 if (!uniqueCodeString.containsKey(text.getValue())) {
 
 
-                                    if (sRectPaint == null && mText.getValue() != properCode) {
-                                    sRectPaint = new Paint();
-                                    sRectPaint.setColor(TEXT_COLOR);
-                                    sRectPaint.setStyle(Paint.Style.STROKE);
-                                    sRectPaint.setStrokeWidth(4.0f);
-                                }
+                                    if (sRectPaint == null && properCode.equals(mText.getValue())) {
+                                        sRectPaint = new Paint();
+                                        sRectPaint.setColor(TEXT_COLOR);
+                                        sRectPaint.setStyle(Paint.Style.STROKE);
+                                        sRectPaint.setStrokeWidth(4.0f);
+                                    }
 
-                                if (sTextPaint == null) {
-                                    sTextPaint = new Paint();
-                                    sTextPaint.setColor(TEXT_COLOR);
-                                    sTextPaint.setTextSize(40.0f); //default was 54.0f, quite big for 5.5" phone
-                                }
+                                    if (sTextPaint == null) {
+                                        sTextPaint = new Paint();
+                                        sTextPaint.setColor(TEXT_COLOR);
+                                        sTextPaint.setTextSize(40.0f); //default was 54.0f, quite big for 5.5" phone
+                                    }
 
-                        }
+                                }
 
         }
         // Redraw the overlay, as this graphic has been added.

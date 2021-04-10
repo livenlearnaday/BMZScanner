@@ -1,4 +1,4 @@
-package io.github.livenlearnaday.bmzscanner.util.converter;
+package io.github.livenlearnaday.bmzscanner.util.converter
 
 
 import androidx.room.TypeConverter

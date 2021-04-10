@@ -1,12 +1,10 @@
 package io.github.livenlearnaday.bmzscanner.scanning.bulkqr;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
@@ -17,11 +15,8 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.AudioManager;
-import android.media.SoundPool;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-
-import android.provider.Settings;
 import android.util.Log;
 import android.util.Size;
 import android.view.MotionEvent;
@@ -33,7 +28,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -44,17 +38,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import org.ddogleg.struct.FastQueue;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +53,6 @@ import boofcv.factory.fiducial.ConfigQrCode;
 import boofcv.factory.fiducial.FactoryFiducial;
 import boofcv.struct.calib.CameraPinholeBrown;
 import boofcv.struct.image.GrayU8;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -101,7 +87,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
     // Does it render failed detections too?
     boolean showFailures = false;
 
-    private boolean mFlash = false;
+    private final boolean mFlash = false;
 
 
     // Where the number of unique messages are listed;
@@ -123,7 +109,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
     private List<CodeDetail> mCodeDetailList;
     int index = 0;
     CodeAdapter adapter1;
-    private boolean failedQRDetection = false;
+    private final boolean failedQRDetection = false;
     private FrameLayout surfaceLayout;
 
 
@@ -265,7 +251,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
 
     @OnClick(R.id.go_to_qrlist_button)
     public void pressedListViewButton(View view) {
-        Log.v("Logging ", String.format("Enter pressedListView QrCodeDetectActivity, mCodeDetailList size %4d", mCodeDetailList.size()));
+        Timber.v(String.format("Enter pressedListView QrCodeDetectActivity, mCodeDetailList size %4d", mCodeDetailList.size()));
         Intent intent = new Intent(this, CodeListActivity.class);
         finish();
         startActivity(intent);
@@ -276,7 +262,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            Log.v("Logging ", "Enter TouchListener onTouch");
+            Timber.v("Enter TouchListener onTouch");
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN: {
                     touching = true;
@@ -299,7 +285,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
 
     @Override
     public void createNewProcessor() {
-        Log.v("Logging ", "Enter createNewProcessor");
+        Timber.v("Enter createNewProcessor");
         setProcessing(new QrCodeProcessing());
 
 
@@ -317,8 +303,8 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
         Paint colorFailed = new Paint();
         Path path = new Path();
 
-        private int uniqueCount = 0;
-        private int oldValue = -1;
+        private final int uniqueCount = 0;
+        private final int oldValue = -1;
 
 
         final FastQueue<Se3_F64> listPose = new FastQueue<>(Se3_F64::new);
@@ -328,7 +314,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
         public QrCodeProcessing() {
             super(GrayU8.class);
 
-            Log.v("Logging ", "Enter QrCodeProcessing ");
+            Timber.v("Enter QrCodeProcessing ");
 
             ConfigQrCode config;
 
@@ -376,7 +362,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
         @Override
         public void onDraw(Canvas canvas, Matrix imageToView) {
 
-            Log.v("Logging ", "Enter onDraw ");
+            Timber.v("Enter onDraw ");
 
             canvas.concat(imageToView);
 
@@ -435,7 +421,7 @@ public class QrCodeDetectActivity extends DemoCamera2Activity {
 
             detector.detect(input);
 
-            Log.v("Logging ", "Enter process ");
+            Timber.v("Enter process ");
 
             synchronized (uniqueLock) {
 

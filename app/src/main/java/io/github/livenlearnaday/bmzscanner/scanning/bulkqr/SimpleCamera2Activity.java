@@ -22,8 +22,17 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.*;
-import android.hardware.camera2.*;
+import android.graphics.ImageFormat;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.SurfaceTexture;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCaptureSession;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
@@ -31,7 +40,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
@@ -45,14 +53,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import boofcv.alg.geo.PerspectiveOps;
-import boofcv.struct.calib.CameraPinhole;
-import georegression.metric.UtilAngle;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
+
+import boofcv.alg.geo.PerspectiveOps;
+import boofcv.struct.calib.CameraPinhole;
+import georegression.metric.UtilAngle;
+import timber.log.Timber;
 
 /**
  * Activity for collecting images from single camera on an Android device using the camera2 API.
@@ -100,7 +109,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
     protected View mView;
 
     //######## START  Variables owned by lock
-    private CameraOpen open = new CameraOpen();
+    private final CameraOpen open = new CameraOpen();
     //######## END
 
     // width and height of the view the camera is displayed in
@@ -133,7 +142,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
      */
     protected void startCameraTexture(TextureView view) {
         if (verbose)
-            Log.i(TAG, "startCamera(TextureView=" + (view != null) + ")");
+            Timber.i("startCamera(TextureView=" + (view != null) + ")");
         this.mTextureView = view;
         this.mView = null;
         this.mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
@@ -141,7 +150,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
 
     protected void startCameraView(View view) {
         if (verbose)
-            Log.i(TAG, "startCamera(View=" + (view != null) + ")");
+            Timber.i("startCamera(View=" + (view != null) + ")");
         this.mView = view;
         this.mTextureView = null;
         view.addOnLayoutChangeListener(mViewLayoutChangeListener);
@@ -149,7 +158,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
 
     protected void startCamera() {
         if (verbose)
-            Log.i(TAG, "startCamera()");
+            Timber.i("startCamera()");
         this.mView = null;
         this.mTextureView = null;
         runOnUiThread(() -> openCamera(0, 0));
@@ -181,7 +190,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (verbose)
-            Log.i(TAG, "onCreate()");
+            Timber.i("onCreate()");
         super.onCreate(savedInstanceState);
         displayMetrics = Resources.getSystem().getDisplayMetrics();
     }
@@ -189,7 +198,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         if (verbose)
-            Log.i(TAG, "onResume()");
+            Timber.i("onResume()");
         super.onResume();
 
         // When attached to a change listener below it's possible for the activity to be shutdown and a change
@@ -208,7 +217,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
                     // It wants to be closed so let's just finish that
                 case CLOSING: {
                     if (verbose)
-                        Log.i(TAG, " camera is closing. Going to just close it now. device=" +
+                        Timber.i(" camera is closing. Going to just close it now. device=" +
                                 (open.mCameraDevice == null));
                     if (open.mCameraDevice != null) {
                         open.closeCamera();
@@ -251,7 +260,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
     @Override
     protected void onPause() {
         if (verbose)
-            Log.i(TAG, "onPause()");
+            Timber.i("onPause()");
         closeCamera();
         stopBackgroundThread();
         super.onPause();
@@ -304,7 +313,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
     protected void onCameraResolutionChange(int cameraWidth, int cameraHeight,
                                             int orientation) {
         if (verbose)
-            Log.i(TAG, "onCameraResolutionChange( " + cameraWidth + " , " + cameraHeight + ")");
+            Timber.i("onCameraResolutionChange( " + cameraWidth + " , " + cameraHeight + ")");
     }
 
     /**
@@ -319,7 +328,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
                                    CameraCharacteristics characteristics,
                                    CaptureRequest.Builder captureRequestBuilder) {
         if (verbose)
-            Log.i(TAG, "configureCamera() default function");
+            Timber.i("configureCamera() default function");
         captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO);
         captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
     }
@@ -329,7 +338,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
      */
     protected boolean selectCamera(String id, CameraCharacteristics characteristics) {
         if (verbose)
-            Log.i(TAG, "selectCamera() default function");
+            Timber.i("selectCamera() default function");
         Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
         return facing == null || facing != CameraCharacteristics.LENS_FACING_FRONT;
     }
@@ -350,7 +359,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
     @SuppressWarnings("MissingPermission")
     protected void openCamera(int widthTexture, int heightTexture) {
         if (verbose)
-            Log.i(TAG, "openCamera( texture: " + widthTexture + "x" + heightTexture + ") activity=" + getClass().getSimpleName());
+            Timber.i("openCamera( texture: " + widthTexture + "x" + heightTexture + ") activity=" + getClass().getSimpleName());
 
         if (Looper.getMainLooper().getThread() != Thread.currentThread()) {
             throw new RuntimeException("Attempted to openCamera() when not in the main looper thread!");
@@ -358,7 +367,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
 
         if (isFinishing()) {
             if (verbose)
-                Log.d(TAG, "openCamera isFinishing()==true");
+                Timber.d("openCamera isFinishing()==true");
             return;
         }
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -369,7 +378,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
         boolean releaseLock = true;
         try {
             if (verbose)
-                Log.d(TAG, "openCamera open.state==" + open.state);
+                Timber.d("openCamera open.state==" + open.state);
 
             if (!open.mLock.tryLock(2500, TimeUnit.MILLISECONDS)) {
                 throw new RuntimeException("Time out waiting to lock camera opening.");
@@ -377,7 +386,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
 
             if (open.state == CameraState.CLOSING) {
                 if (verbose)
-                    Log.d(TAG, "Close request was made after the open request. Aborting and closing. device="
+                    Timber.d("Close request was made after the open request. Aborting and closing. device="
                             + (open.mCameraDevice == null));
                 if (open.mCameraDevice != null) {
                     open.closeCamera();
@@ -394,7 +403,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
 
             if (mBackgroundHandler == null) {
                 if (verbose)
-                    Log.i(TAG, "Background handler is null. Aborting.");
+                    Timber.i("Background handler is null. Aborting.");
                 return;
             }
 
@@ -432,7 +441,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
                 this.cameraToDisplayDensity = displayDensityAdjusted();
 
                 if (verbose)
-                    Log.i(TAG, "selected cameraId=" + cameraId + " orientation=" + open.mSensorOrientation +
+                    Timber.i("selected cameraId=" + cameraId + " orientation=" + open.mSensorOrientation +
                             " res=" + open.mCameraSize.getWidth() + "x" + open.mCameraSize.getHeight());
 
                 open.mCameraCharacterstics = characteristics;
@@ -463,7 +472,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
-            Log.e(TAG, "Null pointer in openCamera()");
+            Timber.e("Null pointer in openCamera()");
             if (handleCameraOpenException(e)) {
                 // Currently an NPE is thrown when the Camera2API is used but not supported on the
                 // device this code runs.
@@ -510,7 +519,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
         open.mLock.lock();
         try {
             if (verbose)
-                Log.i(TAG, "Reopening camera is null == " + (open.mCameraDevice == null) + " state=" + open.state +
+                Timber.i("Reopening camera is null == " + (open.mCameraDevice == null) + " state=" + open.state +
                         " activity=" + getClass().getSimpleName());
 
             if (open.state != CameraState.OPEN)
@@ -991,18 +1000,19 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
     }
 
     // This is run in the background handler and not the looper
-    private ImageReader.OnImageAvailableListener onAvailableListener = imageReader -> {
-        if( imageReader.getMaxImages() == 0 ) {
-            Log.e(TAG,"No images available. Has image.close() not been called?");
+    private final ImageReader.OnImageAvailableListener onAvailableListener = imageReader -> {
+        if (imageReader.getMaxImages() == 0) {
+            Timber.e("No images available. Has image.close() not been called?");
             return;
         }
 
         Image image = imageReader.acquireLatestImage();
         if (image == null) {
-            if( verbose )
-                Log.d(TAG,"OnImageAvailableListener: acquireLatestImage() returned null");
+            if (verbose)
+                Timber.d("OnImageAvailableListener: acquireLatestImage() returned null");
             return;
-        } try {
+        }
+        try {
             // safely acquire the camera resolution
             int cameraWidth, cameraHeight, cameraOrientation;
             open.mLock.lock();
@@ -1023,7 +1033,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
                 // sometimes we request a resolution and Android say's f-you and gives us something else even if it's
                 // in the valid list. Re-adjust everything to what the actual resolution is
                 if (cameraWidth != image.getWidth() || cameraHeight != image.getHeight()) {
-                    Log.e(TAG, "Android broke resolution contract. Actual=" + image.getWidth() + "x" + image.getHeight() +
+                    Timber.e("Android broke resolution contract. Actual=" + image.getWidth() + "x" + image.getHeight() +
                             "  Expected=" + cameraWidth + "x" + cameraHeight);
                     open.mLock.lock();
                     try {
@@ -1068,7 +1078,7 @@ public abstract class SimpleCamera2Activity extends AppCompatActivity {
             // Been getting these weird "buffer is inaccessible" exceptions in the log and can't reproduce them
             // search online shows that they might be bad hardware. Code below attempts to skip over a single
             // bad frame, but will still crash if there are too many in a row
-            Log.e(TAG, "OnImageAvailableListener exception=" + e.getClass().getName()+" message="+e.getMessage());
+            Timber.e("OnImageAvailableListener exception=" + e.getClass().getName() + " message=" + e.getMessage());
             failuresToDecodeImage++;
             if( failuresToDecodeImage >= 10 ) {
                 throw e;

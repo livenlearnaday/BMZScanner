@@ -33,7 +33,6 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -48,13 +47,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.snackbar.Snackbar;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,7 +95,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     private Context context;
     static String mTextCaptured;
     private List<CodeDetail> mCodeDetailList;
-    private String properCode = "";
+    private final String properCode = "";
 
 
     // Permission request codes need to be < 256
@@ -118,8 +115,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
 
-    private int uniqueCount = 0;
-    private int oldValue = -1;
+    private final int uniqueCount = 0;
+    private final int oldValue = -1;
 
 
     @BindView(R.id.recycle_view_scanning)
@@ -147,7 +144,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
     private CodeAdapter adapter1;
 
     private OcrGraphic graphic;
-    private TextBlock text = null;
+    private final TextBlock text = null;
 
 
     private boolean mFocus = true; //start with focus on
@@ -174,8 +171,8 @@ public final class OcrCaptureActivity extends AppCompatActivity {
         mCodeDetailList = new ArrayList<>();
 
 
-        mPreview = (CameraSourcePreview) findViewById(R.id.preview);
-        mGraphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
+        mPreview = findViewById(R.id.preview);
+        mGraphicOverlay = findViewById(R.id.graphicOverlay);
 
         // read parameters from the intent used to launch the activity.
         mFocus = getIntent().getBooleanExtra(AutoFocus, true);
@@ -291,7 +288,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
      * sending the request.
      */
     private void requestCameraPermission() {
-        Log.w(TAG, "Camera permission is not granted. Requesting permission");
+        Timber.w("Camera permission is not granted. Requesting permission");
 
         final String[] permissions = new String[]{Manifest.permission.CAMERA};
 
@@ -356,7 +353,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
             // isOperational() can be used to check if the required native libraries are currently
             // available.  The detectors will automatically become operational once the library
             // downloads complete on device.
-            Log.w(TAG, "Detector dependencies are not yet available.");
+            Timber.w("Detector dependencies are not yet available.");
 
             // Check for low storage.  If there is low storage, the native library will not be
             // downloaded, so detection will not become operational.
@@ -365,7 +362,7 @@ public final class OcrCaptureActivity extends AppCompatActivity {
 
             if (hasLowStorage) {
                 Toast.makeText(context, R.string.low_storage_error, Toast.LENGTH_LONG).show();
-                Log.w(TAG, getString(R.string.low_storage_error));
+                Timber.w(getString(R.string.low_storage_error));
             }
         }
 
@@ -440,13 +437,13 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode != RC_HANDLE_CAMERA_PERM) {
-            Log.d(TAG, "Got unexpected permission result: " + requestCode);
+            Timber.d("Got unexpected permission result: " + requestCode);
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             return;
         }
 
         if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG, "Camera permission granted - initialize the camera source");
+            Timber.d("Camera permission granted - initialize the camera source");
             // We have permission, so create the camerasource
             boolean autoFocus = getIntent().getBooleanExtra(AutoFocus, false);
             boolean useFlash = getIntent().getBooleanExtra(UseFlash, false);
@@ -533,10 +530,10 @@ public final class OcrCaptureActivity extends AppCompatActivity {
                 }
 
             } else {
-                Log.d(TAG, "text data is null");
+                Timber.d("text data is null");
             }
         } else {
-            Log.d(TAG, "no text detected");
+            Timber.d("no text detected");
         }
         return text != null;
     }

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import java.lang.reflect.Parameter;
 import java.util.List;
 
 
@@ -27,7 +26,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Handler mAutoFocusHandler;
     private boolean mPreviewing = true;
     private boolean mAutoFocus = true;
-    private boolean mFlash = false;
+    private final boolean mFlash = false;
     private boolean mSurfaceCreated = false;
     private boolean mShouldScaleToFill = true;
     private Camera.PreviewCallback mPreviewCallback;
@@ -301,9 +300,9 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
-    private Runnable doAutoFocus = new Runnable() {
+    private final Runnable doAutoFocus = new Runnable() {
         public void run() {
-            if(mCameraWrapper != null && mPreviewing && mAutoFocus && mSurfaceCreated) {
+            if (mCameraWrapper != null && mPreviewing && mAutoFocus && mSurfaceCreated) {
                 safeAutoFocus();
             }
         }

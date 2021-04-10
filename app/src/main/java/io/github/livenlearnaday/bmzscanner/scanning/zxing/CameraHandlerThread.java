@@ -10,7 +10,7 @@ import android.os.Looper;
 public class CameraHandlerThread extends HandlerThread {
     private static final String LOG_TAG = "CameraHandlerThread";
 
-    private BarcodeScannerView mScannerView;
+    private final BarcodeScannerView mScannerView;
 
     public CameraHandlerThread(BarcodeScannerView scannerView) {
         super("CameraHandlerThread");

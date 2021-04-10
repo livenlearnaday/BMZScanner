@@ -20,14 +20,10 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
-
 import com.google.android.gms.vision.CameraSource;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
-
-import timber.log.Timber;
 
 /**
  * A view which renders a series of custom graphics to be overlaid on top of an associated preview
@@ -54,7 +50,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
     private int mPreviewHeight;
     private float mHeightScaleFactor = 1.0f;
     private int mFacing = CameraSource.CAMERA_FACING_BACK;
-    private Set<T> mGraphics = new HashSet<>();
+    private final Set<T> mGraphics = new HashSet<>();
 
     /**
      * Base class for a custom graphics object to be rendered within the graphic overlay.  Subclass
@@ -62,7 +58,7 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
      * graphics element.  Add instances to the overlay using {@link GraphicOverlay#add(Graphic)}.
      */
     public static abstract class Graphic {
-        private GraphicOverlay mOverlay;
+        private final GraphicOverlay mOverlay;
 
         public Graphic(GraphicOverlay overlay) {
             mOverlay = overlay;

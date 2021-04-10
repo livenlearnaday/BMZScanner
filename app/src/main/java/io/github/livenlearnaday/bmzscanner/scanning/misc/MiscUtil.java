@@ -1,22 +1,11 @@
 package io.github.livenlearnaday.bmzscanner.scanning.misc;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.vision.text.TextRecognizer;
 
 import georegression.struct.point.Point2D_F64;
 import georegression.struct.shapes.Polygon2D_F64;
-import timber.log.Timber;
-
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 /**
  * @author Peter Abeles

@@ -5,12 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Build;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-
-import com.squareup.leakcanary.LeakCanary;
 
 import org.acra.ACRA;
 import org.acra.BuildConfig;
@@ -96,25 +90,6 @@ public class MainApplication extends Application {
         } catch( RuntimeException | IOException e ) {
             return null;
         }
-    }
-
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-
-        if (LeakCanary.isInAnalyzerProcess( this )) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install( this);
-        //Normal app init code..
-
-
-
-
     }
 
 

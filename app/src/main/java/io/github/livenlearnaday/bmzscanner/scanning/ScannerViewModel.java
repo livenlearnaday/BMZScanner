@@ -1,27 +1,19 @@
 package io.github.livenlearnaday.bmzscanner.scanning;
 
 import android.app.Application;
-import android.content.Context;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.media.ToneGenerator;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import io.github.livenlearnaday.bmzscanner.R;
 import io.github.livenlearnaday.bmzscanner.data.entity.CodeDetail;
 import io.github.livenlearnaday.bmzscanner.data.repository.CodeDetailRepository;
 
 public class ScannerViewModel extends AndroidViewModel {
-    private CodeDetailRepository repository;
-    private LiveData<List<CodeDetail>> allCodeDetail;
+    private final CodeDetailRepository repository;
+    private final LiveData<List<CodeDetail>> allCodeDetail;
 
 
     public ScannerViewModel(@NonNull Application application) {

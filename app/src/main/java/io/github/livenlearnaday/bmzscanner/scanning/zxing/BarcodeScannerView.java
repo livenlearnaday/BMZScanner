@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
-
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -276,11 +275,7 @@ public abstract class BarcodeScannerView extends FrameLayout implements Camera.P
     public boolean getFlash() {
         if(mCameraWrapper != null && CameraUtils.isFlashSupported(mCameraWrapper.mCamera)) {
             Camera.Parameters parameters = mCameraWrapper.mCamera.getParameters();
-            if(parameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH)) {
-                return true;
-            } else {
-                return false;
-            }
+            return parameters.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH);
         }
         return false;
     }

@@ -25,7 +25,6 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.os.Build;
 import android.os.SystemClock;
-
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -49,6 +48,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import timber.log.Timber;
 
 // Note: This requires Google Play Services 8.1 or higher, due to using indirect byte buffers for
 // storing images.
@@ -160,7 +161,7 @@ public class CameraSource {
      * buffer.  We use byte buffers internally because this is a more efficient way to call into
      * native code later (avoids a potential copy).
      */
-    private Map<byte[], ByteBuffer> mBytesToByteBuffer = new HashMap<>();
+    private final Map<byte[], ByteBuffer> mBytesToByteBuffer = new HashMap<>();
 
     //==============================================================================================
     // Builder
@@ -171,7 +172,7 @@ public class CameraSource {
      */
     public static class Builder {
         private final Detector<?> mDetector;
-        private CameraSource mCameraSource = new CameraSource();
+        private final CameraSource mCameraSource = new CameraSource();
 
         /**
          * Creates a camera source builder with the supplied context and detector.  Camera preview
@@ -406,7 +407,7 @@ public class CameraSource {
                     // quickly after stop).
                     mProcessingThread.join();
                 } catch (InterruptedException e) {
-                    Log.d(TAG, "Frame processing thread interrupted on release.");
+                    Timber.d("Frame processing thread interrupted on release.");
                 }
                 mProcessingThread = null;
             }
@@ -431,7 +432,7 @@ public class CameraSource {
                         mCamera.setPreviewDisplay(null);
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "Failed to clear camera preview: " + e);
+                    Timber.e("Failed to clear camera preview: " + e);
                 }
                 mCamera.release();
                 mCamera = null;
@@ -463,7 +464,7 @@ public class CameraSource {
             int maxZoom;
             Camera.Parameters parameters = mCamera.getParameters();
             if (!parameters.isZoomSupported()) {
-                Log.w(TAG, "Zoom is not supported on this device");
+                Timber.w("Zoom is not supported on this device");
                 return currentZoom;
             }
             maxZoom = parameters.getMaxZoom();
@@ -783,8 +784,8 @@ public class CameraSource {
                     mFocusMode)) {
                 parameters.setFocusMode(mFocusMode);
             } else {
-                Log.i(TAG, "Camera focus mode: " + mFocusMode +
-                    " is not supported on this device.");
+                Timber.i("Camera focus mode: " + mFocusMode +
+                        " is not supported on this device.");
             }
         }
 
@@ -796,8 +797,8 @@ public class CameraSource {
                     mFlashMode)) {
                 parameters.setFlashMode(mFlashMode);
             } else {
-                Log.i(TAG, "Camera flash mode: " + mFlashMode +
-                    " is not supported on this device.");
+                Timber.i("Camera flash mode: " + mFlashMode +
+                        " is not supported on this device.");
             }
         }
 
@@ -879,7 +880,7 @@ public class CameraSource {
      * size is null, then there is no picture size with the same aspect ratio as the preview size.
      */
     private static class SizePair {
-        private Size mPreview;
+        private final Size mPreview;
         private Size mPicture;
 
         SizePair(Camera.Size previewSize,
@@ -935,7 +936,7 @@ public class CameraSource {
         // of the preview sizes and hope that the camera can handle it.  Probably unlikely, but we
         // still account for it.
         if (validPreviewSizes.size() == 0) {
-            Log.w(TAG, "No preview sizes have a corresponding same-aspect-ratio picture size");
+            Timber.w("No preview sizes have a corresponding same-aspect-ratio picture size");
             for (Camera.Size previewSize : supportedPreviewSizes) {
                 // The null picture size will let us know that we shouldn't set a picture size.
                 validPreviewSizes.add(new SizePair(previewSize, null));
@@ -1004,7 +1005,7 @@ public class CameraSource {
                 degrees = 270;
                 break;
             default:
-                Log.e(TAG, "Bad rotation value: " + rotation);
+                Timber.e("Bad rotation value: %s", rotation);
         }
 
         CameraInfo cameraInfo = new CameraInfo();
@@ -1082,7 +1083,7 @@ public class CameraSource {
      */
     private class FrameProcessingRunnable implements Runnable {
         private Detector<?> mDetector;
-        private long mStartTimeMillis = SystemClock.elapsedRealtime();
+        private final long mStartTimeMillis = SystemClock.elapsedRealtime();
 
         // This lock guards all of the member variables below.
         private final Object mLock = new Object();
@@ -1131,9 +1132,9 @@ public class CameraSource {
                 }
 
                 if (!mBytesToByteBuffer.containsKey(data)) {
-                    Log.d(TAG,
-                        "Skipping frame.  Could not find ByteBuffer associated with the image " +
-                        "data from the camera.");
+                    Timber.d(
+                            "Skipping frame.  Could not find ByteBuffer associated with the image " +
+                                    "data from the camera.");
                     return;
                 }
 
@@ -1175,7 +1176,7 @@ public class CameraSource {
                             // don't have it yet.
                             mLock.wait();
                         } catch (InterruptedException e) {
-                            Log.d(TAG, "Frame processing loop terminated.", e);
+                            Timber.d("Frame processing loop terminated.", e);
                             return;
                         }
                     }
@@ -1210,7 +1211,7 @@ public class CameraSource {
                 try {
                     mDetector.receiveFrame(outputFrame);
                 } catch (Throwable t) {
-                    Log.e(TAG, "Exception thrown from receiver.", t);
+                    Timber.e("Exception thrown from receiver." + t);
                 } finally {
                     mCamera.addCallbackBuffer(data.array());
                 }

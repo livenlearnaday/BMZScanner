@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 
 import java.util.List;
 
@@ -16,8 +14,8 @@ import io.github.livenlearnaday.bmzscanner.data.source.local.CodeDetailDao;
 
 public class CodeDetailRepository {
 
-    private CodeDetailDao codeDetailDao;
-    private LiveData<List<CodeDetail>> allCodeDetail;
+    private final CodeDetailDao codeDetailDao;
+    private final LiveData<List<CodeDetail>> allCodeDetail;
 
 
     public CodeDetailRepository(Application application) {
@@ -56,7 +54,7 @@ public class CodeDetailRepository {
 
     private static class InsertCodeDetailAsyncTask extends AsyncTask<CodeDetail, Void, Void> {
 
-        private CodeDetailDao codeDetailDao;
+        private final CodeDetailDao codeDetailDao;
 
         private InsertCodeDetailAsyncTask(CodeDetailDao codeDetailDao) {
             this.codeDetailDao = codeDetailDao;
@@ -75,7 +73,7 @@ public class CodeDetailRepository {
 
     private static class UpdateCodeDetailAsyncTask extends AsyncTask<CodeDetail, Void, Void> {
 
-        private CodeDetailDao codeDetailDao;
+        private final CodeDetailDao codeDetailDao;
 
         private UpdateCodeDetailAsyncTask(CodeDetailDao codeDetailDao) {
             this.codeDetailDao = codeDetailDao;
@@ -94,7 +92,7 @@ public class CodeDetailRepository {
 
     private static class DeleteCodeDetailAsyncTask extends AsyncTask<CodeDetail, Void, Void> {
 
-        private CodeDetailDao codeDetailDao;
+        private final CodeDetailDao codeDetailDao;
 
         private DeleteCodeDetailAsyncTask(CodeDetailDao codeDetailDao) {
             this.codeDetailDao = codeDetailDao;
@@ -113,7 +111,7 @@ public class CodeDetailRepository {
 
     private static class DeleteAllCodeDetailAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private CodeDetailDao codeDetailDao;
+        private final CodeDetailDao codeDetailDao;
 
         private DeleteAllCodeDetailAsyncTask(CodeDetailDao codeDetailDao) {
             this.codeDetailDao = codeDetailDao;

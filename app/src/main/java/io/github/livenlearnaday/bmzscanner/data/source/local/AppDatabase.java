@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
 import io.github.livenlearnaday.bmzscanner.data.entity.CodeDetail;
 import io.github.livenlearnaday.bmzscanner.util.converter.MapTypeConverter;
 
@@ -34,7 +35,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
 
-    private static RoomDatabase.Callback roomCallBack = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback roomCallBack = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -43,7 +44,7 @@ public abstract class AppDatabase extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private CodeDetailDao codeDetailDao;
+        private final CodeDetailDao codeDetailDao;
 
         private PopulateDbAsyncTask(AppDatabase db) {
             codeDetailDao = db.codeDetailDao();

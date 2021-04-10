@@ -18,7 +18,6 @@ package io.github.livenlearnaday.bmzscanner.scanning.ocr;
 import android.Manifest;
 import android.content.Context;
 import android.content.res.Configuration;
-
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -31,11 +30,13 @@ import com.google.android.gms.common.images.Size;
 
 import java.io.IOException;
 
+import timber.log.Timber;
+
 public class CameraSourcePreview extends ViewGroup {
     private static final String TAG = "CameraSourcePreview";
 
-    private Context mContext;
-    private SurfaceView mSurfaceView;
+    private final Context mContext;
+    private final SurfaceView mSurfaceView;
     private boolean mStartRequested;
     private boolean mSurfaceAvailable;
     private CameraSource mCameraSource;
@@ -119,9 +120,9 @@ public class CameraSourcePreview extends ViewGroup {
             try {
                 startIfReady();
             } catch (SecurityException se) {
-                Log.e(TAG,"Do not have permission to start the camera", se);
+                Timber.e("Do not have permission to start the camera %s", se);
             } catch (IOException e) {
-                Log.e(TAG, "Could not start camera source.", e);
+                Timber.e("Could not start camera source. %s", e);
             }
         }
 
@@ -189,9 +190,9 @@ public class CameraSourcePreview extends ViewGroup {
         try {
             startIfReady();
         } catch (SecurityException se) {
-            Log.e(TAG,"Do not have permission to start the camera", se);
+            Timber.e("Do not have permission to start the camera %s", se);
         } catch (IOException e) {
-            Log.e(TAG, "Could not start camera source.", e);
+            Timber.e("Could not start camera source. %s", e);
         }
     }
 
